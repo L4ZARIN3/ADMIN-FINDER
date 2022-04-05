@@ -1,7 +1,8 @@
 <?php
 
 function gravar($nome, $texto){
-	$fp = fopen($nome.'.txt', "a+");
+	$arquivo = str_replace(["\n","\r"],'',$nome.".txt");
+	$fp = fopen($arquivo, "a+");
 	fwrite($fp, $texto);
 	fclose($fp);
 }
@@ -17,6 +18,10 @@ echo "
 echo "[SITE*]: ";
 $stdinsite = fopen ("php://stdin","r");
 $site = fgets($stdinsite);
+echo "[GRAVAR RESULTADOS EM *]: ";
+$stdingravar = fopen ("php://stdin","r");
+$gravar = fgets($stdingravar);
+
 $words = explode("\n", file_get_contents('./wordlist.txt'));
 $i=0;
 
@@ -42,7 +47,7 @@ foreach($words as $word) {
     $httpCode = curl_getinfo($ch);
     if($httpCode['http_code'] == 200){
         echo "\e[32m[$i] SIZE [".$httpCode['size_download']."] 200 OK => ".$payload."\033[0m\n";
-        gravar(str_replace(['https://', 'http://'], "", filter_var($site, FILTER_SANITIZE_URL)), '['.$i.'] SIZE ['.$httpCode['size_download'].'] 200 OK => '.$payload."\n");
+        gravar($gravar, '['.$i.'] SIZE ['.$httpCode['size_download'].'] 200 OK => '.$payload."\n");
     }else{
         echo "\e[31m[$i] SIZE [".$httpCode['size_download']."] ".$httpCode['http_code']." => ".$payload."\033[0m\n";
     }
