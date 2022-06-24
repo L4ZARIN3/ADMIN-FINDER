@@ -1,7 +1,7 @@
 <?php
 
 function gravar($nome, $texto){
-	$arquivo = str_replace(["\n","\r"],'',$nome.".txt");
+	$arquivo = $nome.".txt";
 	$fp = fopen($arquivo, "a+");
 	fwrite($fp, $texto);
 	fclose($fp);
@@ -15,12 +15,8 @@ echo "
  _  ___ |  /_/ /_  /  / / __/ /  _  /|  /     _  __/   __/ /  _  /|  / _  /_/ /_  /___  _  _, _/     / /_/ /___  ,<   
  /_/  |_/_____/ /_/  /_/  /___/  /_/ |_/      /_/      /___/  /_/ |_/  /_____/ /_____/  /_/ |_|      \____/_(_)_/|_|\033[0m
 ::::::::::::::::::::::::::::::::::::::::::::::::BY JOHN KAI$3R:::::::::::::::::::::::::::::::::::::::::::::::::::::\n";
-echo "[SITE*]: ";
-$stdinsite = fopen ("php://stdin","r");
-$site = fgets($stdinsite);
-echo "[GRAVAR RESULTADOS EM *]: ";
-$stdingravar = fopen ("php://stdin","r");
-$gravar = fgets($stdingravar);
+$site = readline("[SITE*]: ");
+$gravar = readline("[GRAVAR RESULTADOS EM *]: ");
 
 $words = explode("\n", file_get_contents('./wordlist.txt'));
 $i=0;
